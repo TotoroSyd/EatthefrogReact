@@ -302,11 +302,11 @@ tbody {
 .th-date,
 .th-status,
 .th-action {
-  width: 10%;
+  width: 12%;
   padding: 1rem;
 }
 .th-description {
-  width: 50%;
+  width: 40%;
 }
 
 .task {

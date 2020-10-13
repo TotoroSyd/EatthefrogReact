@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 // import { useTable } from "react-table";
 import Task from "./Task";
 
 export default function Tasklistboard() {
+  // const [taskObj, setTaskObj] = useState({ name: 1 });
+  const task = (
+    <Task
+      name="....."
+      description="fdsfsdfsdjkh kfjsdljfsjdf ljfds fdsfsdfsdjkh kfjsdljfsjdf ljfds fdsfsdfsdjkh kfjsdljfsjdf ljfds"
+      owner="Phoebe"
+      date="10-11-2020"
+      status="To do"
+    />
+  );
+
   return (
     <div className="task-list-board">
       <h3 className="today">Thursday, Sep 3, 2020</h3>
@@ -17,36 +28,7 @@ export default function Tasklistboard() {
             <th className="th-action"></th>
           </tr>
         </thead>
-        <tbody>
-          <Task
-            name="fdsfsdfsdjkh kfjsdljfsjdf ljfds"
-            description="fdsfsdfsdjkh kfjsdljfsjdf ljfds fdsfsdfsdjkh kfjsdljfsjdf ljfds fdsfsdfsdjkh kfjsdljfsjdf ljfds"
-            owner="Phoebe"
-            date="10-11-2020"
-            status="To do"
-          />
-          <Task
-            name="fdsfsdfsdjkh kfjsdljfsjdf ljfds"
-            description="fdfsdjkh kfjsdljfsjdf ljfds"
-            owner="Phoebe"
-            date="10-11-2020"
-            status="To do"
-          />
-          <Task
-            name="fdsfsdfsdjkh kfjsdljfsjdf ljfds"
-            description="fdsfsdfsdjkh kfjsdljfsjdf ljfds fdsfsdfsdjkh kfjsdljfsjdf ljfds fdsfsdfsdjkh kfjsdljfsjdf ljfds ljfds ljfds ljfds fdsfsdfsdjkh kfjsdljfsjdf ljfds fdsfsdfsdjkh kfjsdljfsjdf ljfds fdsfsdfsdjkh kfjsdljfsjdf ljfds fdsfsdfsdjkh kfjsdljfsjdf ljfdsfdsfsdfsdjkh kfjsdljfsjdf ljfds fdsfsdfsdjkh kfjsdljfsjdf ljfds"
-            owner="Phoebe"
-            date="10-11-2020"
-            status="To do"
-          />
-          <Task
-            name="fdsfsdfsdjkh kfjsdljfsjdf ljfds"
-            description="fdsfsdfsdjkh kfjsdljfsjdf ljfds fdsfsdfsdjkh kfjsdljfsjdf ljfds fdsfsdfsdjkh kfjsdljfsjdf ljfds ljfds ljfds ljfds fdsfsdfsdjkh kfjsdljfsjdf ljfds fdsfsdfsdjkh kfjsdljfsjdf ljfds fdsfsdfsdjkh kfjsdljfsjdf ljfds fdsfsdfsdjkh kfjsdljfsjdf ljfdsfdsfsdfsdjkh kfjsdljfsjdf ljfds fdsfsdfsdjkh kfjsdljfsjdf ljfds"
-            owner="Phoebe"
-            date="10-11-2020"
-            status="To do"
-          />
-        </tbody>
+        <tbody>{task}</tbody>
       </table>
     </div>
   );
