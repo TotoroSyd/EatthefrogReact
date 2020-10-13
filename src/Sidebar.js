@@ -3,8 +3,10 @@ import Sidebarbutton from "./Sidebarbutton";
 import Subsidebarbutton from "./Subsidebarbutton";
 import Actionbutton from "./Actionbutton";
 import Modall from "./Modall";
+import Form from "./Form";
 
 export default function Sidebar() {
+  // Set State
   const [showModal, setShowModal] = useState(false);
 
   const handleClose = () => setShowModal(false);
@@ -12,7 +14,7 @@ export default function Sidebar() {
 
   return (
     <>
-      <div className="rightSideBar">
+      <div className="sideBar">
         <Actionbutton action="create" onClick={handleShow} />
         <Sidebarbutton title="All" value="0" />
         <Sidebarbutton title="Todo" value="0" />
@@ -23,7 +25,9 @@ export default function Sidebar() {
         <Sidebarbutton title="Tomorrow" value="0" />
         <Sidebarbutton title="Soon" value="0" />
       </div>
-      <Modall title="Create task" show={showModal} handleClose={handleClose} />
+      <Modall title="Create task" show={showModal} handleClose={handleClose}>
+        <Form handleClose={handleClose} /> {/*children */}
+      </Modall>
     </>
   );
 }
