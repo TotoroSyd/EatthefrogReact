@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Form from "react-bootstrap/Form";
 // import HelpBlock from "react-bootstrap/FormGroup";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
+import { TaskContext } from "./Context";
 
 export default function Formm({ handleClose, dataToParent }) {
   const [formData, setFormData] = useState({});
   const [error, setError] = useState({});
-  //   const [disabled, setDisabled] = useState("disabled");
+  const { tasks, setTasks } = useContext(TaskContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -15,6 +16,7 @@ export default function Formm({ handleClose, dataToParent }) {
     // SOLUTION 1 TO GET INPUT VALUES USING STATE
     // console.log(formData);
     dataToParent(formData);
+    setTasks([...tasks, formData]);
 
     // SOLUTION 2 TO GET INPUT VALUES
     // const form = event.target;

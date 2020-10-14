@@ -1,9 +1,8 @@
 import React from "react";
 
 export default function Task({ name, description, owner, date, status }) {
-  const taskid = Date.now().toString();
   return (
-    <tr className="task" data-task-id={taskid}>
+    <tr className="task">
       <td className="th-name">{name}</td>
       <td className="th-description">{description}</td>
       <td className="th-owner">{owner}</td>
