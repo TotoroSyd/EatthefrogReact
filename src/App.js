@@ -1,14 +1,18 @@
 import React from "react";
 import "./App.css";
 
-import TasklistV from "./TasklistV";
-import WelcomeV from "./WelcomeV";
+import TasklistV from "./components/TasklistV";
+import WelcomeV from "./components/WelcomeV";
+import TaskContextProvider from "../src/contexts/TaskContext";
+import FilterContextProvider from "../src/contexts/FilterContext";
 
 export default function App() {
   return (
-    <>
-      <WelcomeV />
-      <TasklistV />
-    </>
+    <FilterContextProvider>
+      <TaskContextProvider>
+        <WelcomeV />
+        <TasklistV />
+      </TaskContextProvider>
+    </FilterContextProvider>
   );
 }
