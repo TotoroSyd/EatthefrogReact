@@ -4,14 +4,27 @@ import Subsidebarbutton from "./Subsidebarbutton";
 import Actionbutton from "./Actionbutton";
 import Modall from "./Modall";
 import Formm from "./Form";
+import EditFormm from "./EditForm";
 import { TaskContext } from "../contexts/TaskContext";
 import { FilterContext } from "../contexts/FilterContext";
+import { ModalContext } from "../contexts/ModalContext";
 
 export default function Sidebar() {
   // Set statte to control Show/ No show Modal
-  const [showModal, setShowModal] = useState(false);
-  const handleClose = () => setShowModal(false);
-  const handleShow = () => setShowModal(true);
+  const {
+    showModal,
+    setShowModal,
+    editName,
+    setEditName,
+    editDescription,
+    setEditDescription,
+    editOwner,
+    setEditOwner,
+    editDate,
+    setEditDate,
+    editStatus,
+    setEditStatus,
+  } = useContext(ModalContext);
 
   const { setFilter } = useContext(FilterContext);
 
@@ -26,11 +39,21 @@ export default function Sidebar() {
     soon,
     todoToday,
   } = useContext(TaskContext);
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => {
+    // show Modal Create Task
+    setShowModal(true);
+  };
 
   return (
     <>
       <div className="sideBar">
-        <Actionbutton action="create" onClick={handleShow} />
+        <Actionbutton
+          action="create"
+          onClick={(e) => {
+            handleShow();
+          }}
+        />
         <Sidebarbutton
           title="All"
           value={all}
@@ -88,8 +111,20 @@ export default function Sidebar() {
           }}
         />
       </div>
-      <Modall title="Create task" show={showModal} handleClose={handleClose}>
+      {/* Create Modal */}
+      <Modall title={"Create Task"} show={showModal} handleClose={handleClose}>
         <Formm handleClose={handleClose} />
+      </Modall>
+      {/* Edit modal */}
+      <Modall title={"Edit Task"} show={showModal} handleClose={handleClose}>
+        <EditFormm
+          handleClose={handleClose}
+          editName={editName}
+          editDescription={editDescription}
+          editOwner={editOwner}
+          editDate={editDate}
+          editStatus={editStatus}
+        />
       </Modall>
     </>
   );

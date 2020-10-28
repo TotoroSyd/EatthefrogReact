@@ -35,6 +35,7 @@ export default function TaskContextProvider({ children }) {
   const todayDisplay = format(Date.now(), "EEEE, do MMM yyyy");
   const taskList = [
     {
+      id: 1,
       taskname: "default",
       taskdescription: "default",
       taskowner: "Phoebe",
@@ -42,6 +43,7 @@ export default function TaskContextProvider({ children }) {
       taskstatus: "To Do",
     },
     {
+      id: 2,
       taskname: "In Progress",
       taskdescription: "In Progress",
       taskowner: "Phoebe",
@@ -49,6 +51,7 @@ export default function TaskContextProvider({ children }) {
       taskstatus: "In Progress",
     },
     {
+      id: 3,
       taskname: "review",
       taskdescription: "review",
       taskowner: "Phoebe",
@@ -56,6 +59,7 @@ export default function TaskContextProvider({ children }) {
       taskstatus: "Review",
     },
     {
+      id: 4,
       taskname: "done",
       taskdescription: "done",
       taskowner: "Phoebe",
@@ -65,6 +69,9 @@ export default function TaskContextProvider({ children }) {
   ];
 
   const [tasks, setTasks] = useState(taskList);
+
+  // create a seperated state to store filtered task list
+  // if using state 'tasks', it will affect the badge
   const [tasksFiltered, setTasksFiltered] = useState("");
 
   const { filter } = useContext(FilterContext);

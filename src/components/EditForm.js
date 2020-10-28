@@ -3,35 +3,38 @@ import Form from "react-bootstrap/Form";
 // import HelpBlock from "react-bootstrap/FormGroup";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
-import { format, formatDistance } from "date-fns";
 import { v4 as uuid } from "uuid";
 
 import { TaskContext } from "../contexts/TaskContext";
 import { ModalContext } from "../contexts/ModalContext";
 
-export default function Formm({ handleClose }) {
+export default function EditFormm({
+  handleClose,
+  editName,
+  editDescription,
+  editOwner,
+  editDate,
+  editStatus,
+}) {
   const [formData, setFormData] = useState({});
   const [error, setError] = useState({});
   const { tasks, setTasks } = useContext(TaskContext);
+  const { edit } = useContext(ModalContext);
 
   // console.log(editName, editDescription, editOwner, editDate, editStatus);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     handleClose();
-    // SOLUTION 1 TO GET INPUT VALUES USING STATE
-    // console.log(formData);
-    // dataToParent(formData);
-    setTasks([...tasks, { ...formData, id: uuid() }]);
-
-    // SOLUTION 2 TO GET INPUT VALUES
-    // const form = event.target;
-    // // FormData object will be populated with the form's current [key, value] using the name property of each element for the keys
-    // // and their submitted value for the values
-    // const formdata = new FormData(form);
-    // // Convert [key, value] pairs into an object
-    // const dataObj = Object.fromEntries(formdata.entries());
-    // // console.log(dataObj);
+    // if it is 'edit'
+    if (edit === true) {
+      console.log("handleSubmitt got edit true");
+    } else {
+      // SOLUTION 1 TO GET INPUT VALUES USING STATE
+      // console.log(formData);
+      // dataToParent(formData);
+      setTasks([...tasks, { ...formData, id: uuid() }]);
+    }
   };
 
   const handleChange = (event) => {
@@ -138,7 +141,8 @@ export default function Formm({ handleClose }) {
         <Form.Group as={Col} controlId="taskstatus">
           <Form.Label>Status</Form.Label>
           <Form.Control as="select" name="taskstatus" onChange={handleChange}>
-            <option defaultValue="To Do">To Do</option>
+            <option defaultValue={editStatus}>{editStatus}</option>
+            <option value="To Do">To Do</option>
             <option value="In Progress">In Progress</option>
             <option value="Review">Review</option>
             <option value="Done">Done</option>

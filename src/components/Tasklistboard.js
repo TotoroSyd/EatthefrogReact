@@ -10,13 +10,15 @@ export default function Tasklistboard() {
   // return the value that is stored in the context. const { tasks, setTasks } - setTasks is optional in this component because I dont setTask here
   const { tasks, tasksFiltered, todayDisplay } = useContext(TaskContext);
   const { filter } = useContext(FilterContext);
+
   let task = [];
 
   if (filter === "" || filter === "all") {
     task = tasks.map((task) => {
       return (
         <Task
-          key={uuid()}
+          key={task.id}
+          id={task.id}
           name={task.taskname}
           description={task.taskdescription}
           owner={task.taskowner}
@@ -40,7 +42,8 @@ export default function Tasklistboard() {
     task = tasksFiltered.map((task) => {
       return (
         <Task
-          key={uuid()}
+          key={task.id}
+          id={task.id}
           name={task.taskname}
           description={task.taskdescription}
           owner={task.taskowner}
