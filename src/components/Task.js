@@ -4,6 +4,7 @@ import Modall from "./Modall";
 import Formm from "./Form";
 
 export default function Task({ id, name, description, owner, date, status }) {
+  // console.log(id, name, description, owner, date, status);
   // Set statte to control Show/ No show Modal
   const {
     showModal,
@@ -13,13 +14,9 @@ export default function Task({ id, name, description, owner, date, status }) {
     setEditName,
     editDescription,
     setEditDescription,
-    editOwner,
     setEditOwner,
-    editDate,
     setEditDate,
-    editStatus,
     setEditStatus,
-    idTaskToEdit,
     setIdTaskToEdit,
     setEdit,
   } = useContext(ModalContext);
@@ -74,8 +71,6 @@ export default function Task({ id, name, description, owner, date, status }) {
           className="delete-btn"
           onClick={(e) => {
             e.preventDefault();
-            console.log("delete button clicked");
-            console.log(id);
           }}
         >
           <img

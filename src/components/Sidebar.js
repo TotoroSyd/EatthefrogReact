@@ -4,7 +4,6 @@ import Subsidebarbutton from "./Subsidebarbutton";
 import Actionbutton from "./Actionbutton";
 import Modall from "./Modall";
 import Formm from "./Form";
-import EditFormm from "./EditForm";
 import { TaskContext } from "../contexts/TaskContext";
 import { FilterContext } from "../contexts/FilterContext";
 import { ModalContext } from "../contexts/ModalContext";
@@ -14,6 +13,8 @@ export default function Sidebar() {
   const {
     showModal,
     setShowModal,
+    modalTitle,
+    setModalTitle,
     editName,
     setEditName,
     editDescription,
@@ -43,6 +44,14 @@ export default function Sidebar() {
   const handleShow = () => {
     // show Modal Create Task
     setShowModal(true);
+    // change Modal title to Create Task (if previously it was set as Edit task)
+    setModalTitle("Create Task");
+    // reset Form fields
+    setEditName("");
+    setEditDescription("");
+    setEditOwner("");
+    setEditStatus("To Do");
+    setEditDate(Date.now());
   };
 
   return (
@@ -111,13 +120,8 @@ export default function Sidebar() {
           }}
         />
       </div>
-      {/* Create Modal */}
-      <Modall title={"Create Task"} show={showModal} handleClose={handleClose}>
-        <Formm handleClose={handleClose} />
-      </Modall>
-      {/* Edit modal */}
-      <Modall title={"Edit Task"} show={showModal} handleClose={handleClose}>
-        <EditFormm
+      <Modall title={modalTitle} show={showModal} handleClose={handleClose}>
+        <Formm
           handleClose={handleClose}
           editName={editName}
           editDescription={editDescription}
