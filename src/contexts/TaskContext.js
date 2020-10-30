@@ -21,42 +21,57 @@ export const TaskContext = createContext();
 // COntext wrapper component - to store state
 export default function TaskContextProvider({ children }) {
   const todayDisplay = format(Date.now(), "EEEE, do MMM yyyy");
-  // const taskList = [
-  //   {
-  //     id: 1,
-  //     taskname: "default",
-  //     taskdescription: "default",
-  //     taskowner: "Phoebe",
-  //     taskdate: Date.now(),
-  //     taskstatus: "To Do",
-  //   },
-  //   {
-  //     id: 2,
-  //     taskname: "In Progress",
-  //     taskdescription: "In Progress",
-  //     taskowner: "Phoebe",
-  //     taskdate: Date.now(),
-  //     taskstatus: "In Progress",
-  //   },
-  //   {
-  //     id: 3,
-  //     taskname: "review",
-  //     taskdescription: "review",
-  //     taskowner: "Phoebe",
-  //     taskdate: Date.now(),
-  //     taskstatus: "Review",
-  //   },
-  //   {
-  //     id: 4,
-  //     taskname: "done",
-  //     taskdescription: "done",
-  //     taskowner: "Phoebe",
-  //     taskdate: Date.now(),
-  //     taskstatus: "Done",
-  //   },
-  // ];
 
+  // localStorage.setItem(
+  //   "tasks",
+  //   JSON.stringify([
+  //     {
+  //       id: 1,
+  //       taskname: "default",
+  //       taskdescription: "default",
+  //       taskowner: "Phoebe",
+  //       taskdate: Date.now(),
+  //       taskstatus: "To Do",
+  //     },
+  //     {
+  //       id: 2,
+  //       taskname: "In Progress",
+  //       taskdescription: "In Progress",
+  //       taskowner: "Phoebe",
+  //       taskdate: Date.now(),
+  //       taskstatus: "In Progress",
+  //     },
+  //     {
+  //       id: 3,
+  //       taskname: "review",
+  //       taskdescription: "review",
+  //       taskowner: "Phoebe",
+  //       taskdate: Date.now(),
+  //       taskstatus: "Review",
+  //     },
+  //     {
+  //       id: 4,
+  //       taskname: "done",
+  //       taskdescription: "done",
+  //       taskowner: "Phoebe",
+  //       taskdate: Date.now(),
+  //       taskstatus: "Done",
+  //     },
+  //   ])
+  // );
   const [tasks, setTasks] = useState([]);
+  const [taskListVisible, setTaskListVisible] = useState(false);
+
+  // Get tasks from localstorage when page loads/reloads
+  useEffect(() => {
+    const taskList = localStorage.getItem("tasks");
+    setTasks(JSON.parse(taskList));
+  }, []);
+
+  // any time tasks state changes (edit/ delete), localstorage will save the updated version of tasks
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   // create a seperated state to store filtered task list
   // if using state 'tasks', it will affect the badge
@@ -233,6 +248,8 @@ export default function TaskContextProvider({ children }) {
         idTaskToEdit,
         setIdTaskToEdit,
         deleteTask,
+        taskListVisible,
+        setTaskListVisible,
       }}
     >
       {children}

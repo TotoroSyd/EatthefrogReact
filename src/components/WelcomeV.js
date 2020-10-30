@@ -13,7 +13,9 @@ export default function WelcomeV() {
   }
 
   // Access tasklist from TaskContext
-  const { todoToday, tmr, soon, todayDisplay } = useContext(TaskContext);
+  const { todoToday, tmr, soon, todayDisplay, setTaskListVisible } = useContext(
+    TaskContext
+  );
 
   return (
     <div role="banner" className="banner">
@@ -34,7 +36,7 @@ export default function WelcomeV() {
           <WCard title="Soon" value={soon} />
         </div>
         <div className="welcome_button_more">
-          <a href="task-list-board">
+          <a href="/#">
             <img
               className="frogButton"
               src="/images/FrogButtonWhiteBg_close.svg"
@@ -42,6 +44,11 @@ export default function WelcomeV() {
               ref={imageRef}
               onMouseOver={() => changeImage("open")}
               onMouseOut={() => changeImage("close")}
+              onClick={(e) => {
+                // compulsory to stop the page to rerender
+                e.preventDefault();
+                setTaskListVisible(true);
+              }}
             />
           </a>
         </div>
