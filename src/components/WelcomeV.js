@@ -44,6 +44,11 @@ export default function WelcomeV() {
               ref={imageRef}
               onMouseOver={() => changeImage("open")}
               onMouseOut={() => changeImage("close")}
+              onClick={(e) => {
+                // compulsory to stop the page to rerender
+                e.preventDefault();
+                setTaskListVisible(true);
+              }}
             />
           </a>
         </div>

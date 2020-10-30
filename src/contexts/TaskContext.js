@@ -233,6 +233,8 @@ export default function TaskContextProvider({ children }) {
         idTaskToEdit,
         setIdTaskToEdit,
         deleteTask,
+        taskListVisible,
+        setTaskListVisible,
       }}
     >
       {children}
