@@ -132,6 +132,7 @@ export default function TaskContextProvider({ children }) {
         setTasksFiltered(soonArray);
         break;
     }
+    // eslint-disable-next-line
   }, [filter]);
 
   // Count number of tasks with criteria and link to badge
