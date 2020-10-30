@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { TaskContext } from "../src/contexts/TaskContext";
+import { TaskContext } from "../contexts/TaskContext";
 
 export default function Hiddenbanner() {
   const { setTaskListVisible } = useContext(TaskContext);
