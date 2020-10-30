@@ -1,6 +1,8 @@
 import React from "react";
+import { TaskContext } from "../src/contexts/TaskContext";
 
 export default function Hiddenbanner() {
+  const { taskListVisible } = useContext(TaskContext);
   const imageRef = React.useRef(null);
   function changeImage(signal) {
     if (signal === "close")
@@ -19,6 +21,11 @@ export default function Hiddenbanner() {
           ref={imageRef}
           onMouseOver={() => changeImage("open")}
           onMouseOut={() => changeImage("close")}
+          onClick={(e) => {
+            // compulsory to stop the page to rerender
+            e.preventDefault();
+            setTaskListVisible(false);
+          }}
         />
       </a>
     </div>
