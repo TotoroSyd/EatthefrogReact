@@ -6,6 +6,7 @@ import React, {
   useContext,
 } from "react";
 import { FilterContext } from "../contexts/FilterContext";
+
 import {
   format,
   isToday,
@@ -19,67 +20,56 @@ export const TaskContext = createContext();
 
 // COntext wrapper component - to store state
 export default function TaskContextProvider({ children }) {
-  function findDate(start_date, period) {
-    let result = Date.parse(addDays(start_date, period));
-    return result;
-  }
-
-  function dateIsWithinInterval(dateToCheck, start, end) {
-    let withinInterval = isWithinInterval(dateToCheck, {
-      start: start,
-      end: end,
-    });
-    return withinInterval;
-  }
-
   const todayDisplay = format(Date.now(), "EEEE, do MMM yyyy");
-  const taskList = [
-    {
-      id: 1,
-      taskname: "default",
-      taskdescription: "default",
-      taskowner: "Phoebe",
-      taskdate: Date.now(),
-      taskstatus: "To Do",
-    },
-    {
-      id: 2,
-      taskname: "In Progress",
-      taskdescription: "In Progress",
-      taskowner: "Phoebe",
-      taskdate: Date.now(),
-      taskstatus: "In Progress",
-    },
-    {
-      id: 3,
-      taskname: "review",
-      taskdescription: "review",
-      taskowner: "Phoebe",
-      taskdate: Date.now(),
-      taskstatus: "Review",
-    },
-    {
-      id: 4,
-      taskname: "done",
-      taskdescription: "done",
-      taskowner: "Phoebe",
-      taskdate: Date.now(),
-      taskstatus: "Done",
-    },
-  ];
+  // const taskList = [
+  //   {
+  //     id: 1,
+  //     taskname: "default",
+  //     taskdescription: "default",
+  //     taskowner: "Phoebe",
+  //     taskdate: Date.now(),
+  //     taskstatus: "To Do",
+  //   },
+  //   {
+  //     id: 2,
+  //     taskname: "In Progress",
+  //     taskdescription: "In Progress",
+  //     taskowner: "Phoebe",
+  //     taskdate: Date.now(),
+  //     taskstatus: "In Progress",
+  //   },
+  //   {
+  //     id: 3,
+  //     taskname: "review",
+  //     taskdescription: "review",
+  //     taskowner: "Phoebe",
+  //     taskdate: Date.now(),
+  //     taskstatus: "Review",
+  //   },
+  //   {
+  //     id: 4,
+  //     taskname: "done",
+  //     taskdescription: "done",
+  //     taskowner: "Phoebe",
+  //     taskdate: Date.now(),
+  //     taskstatus: "Done",
+  //   },
+  // ];
 
-  const [tasks, setTasks] = useState(taskList);
+  const [tasks, setTasks] = useState([]);
 
   // create a seperated state to store filtered task list
   // if using state 'tasks', it will affect the badge
   const [tasksFiltered, setTasksFiltered] = useState("");
+  const [idTaskToEdit, setIdTaskToEdit] = useState("");
 
+  // Filter to show tasks with criteria
   const { filter } = useContext(FilterContext);
   useEffect(() => {
     switch (filter) {
       default:
         // all
-        setTasksFiltered(taskList);
+        setTasksFiltered(tasks);
         break;
       case "todo":
         // to filter, it depends on the real taskList
@@ -129,6 +119,7 @@ export default function TaskContextProvider({ children }) {
     }
   }, [filter]);
 
+  // Count number of tasks with criteria and link to badge
   const all = tasks.length;
 
   // Count tasks with "To do" Status
@@ -154,6 +145,7 @@ export default function TaskContextProvider({ children }) {
 
   // Count tasks with "In Progress" Status
   const inProgress = useMemo(() => {
+    // console.log(tasks);
     const inProgressArray = tasks.filter(
       (task) => task.taskstatus === "In Progress"
     );
@@ -189,6 +181,18 @@ export default function TaskContextProvider({ children }) {
   }, [tasks]);
 
   // Count Soon tasks (!Done) - within 3 days from today
+  function findDate(start_date, period) {
+    let result = Date.parse(addDays(start_date, period));
+    return result;
+  }
+
+  function dateIsWithinInterval(dateToCheck, start, end) {
+    let withinInterval = isWithinInterval(dateToCheck, {
+      start: start,
+      end: end,
+    });
+    return withinInterval;
+  }
 
   const soon = useMemo(() => {
     const start_date = Date.now();
@@ -202,6 +206,13 @@ export default function TaskContextProvider({ children }) {
     });
     return soonArray.length;
   }, [tasks]);
+
+  // Delete function
+  const deleteTask = (id) => {
+    const tasksAfterDeleted = tasks.filter((task) => task.id !== id);
+    console.log(tasksAfterDeleted);
+    setTasks(tasksAfterDeleted);
+  };
 
   // Share tasks state
   return (
@@ -219,6 +230,9 @@ export default function TaskContextProvider({ children }) {
         soon,
         todoToday,
         todayDisplay,
+        idTaskToEdit,
+        setIdTaskToEdit,
+        deleteTask,
       }}
     >
       {children}

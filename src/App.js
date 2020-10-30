@@ -10,12 +10,12 @@ import ModalContextProvider from "../src/contexts/ModalContext";
 export default function App() {
   return (
     <FilterContextProvider>
-      <TaskContextProvider>
-        <WelcomeV />
-        <ModalContextProvider>
+      <ModalContextProvider>
+        <TaskContextProvider>
+          <WelcomeV />
           <TasklistV />
-        </ModalContextProvider>
-      </TaskContextProvider>
+        </TaskContextProvider>
+      </ModalContextProvider>
     </FilterContextProvider>
   );
 }

@@ -3,26 +3,44 @@ import Form from "react-bootstrap/Form";
 // import HelpBlock from "react-bootstrap/FormGroup";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
-import { format, formatDistance } from "date-fns";
 import { v4 as uuid } from "uuid";
 
 import { TaskContext } from "../contexts/TaskContext";
 import { ModalContext } from "../contexts/ModalContext";
 
-export default function Formm({ handleClose }) {
+export default function Formm({
+  handleClose,
+  editName,
+  editDescription,
+  editOwner,
+  editDate,
+  editStatus,
+}) {
   const [formData, setFormData] = useState({});
-  const [error, setError] = useState({});
-  const { tasks, setTasks } = useContext(TaskContext);
-
-  // console.log(editName, editDescription, editOwner, editDate, editStatus);
+  const { tasks, setTasks, idTaskToEdit } = useContext(TaskContext);
+  const { edit } = useContext(ModalContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     handleClose();
-    // SOLUTION 1 TO GET INPUT VALUES USING STATE
-    // console.log(formData);
-    // dataToParent(formData);
-    setTasks([...tasks, { ...formData, id: uuid() }]);
+    // use State edit as a gatekeeper to stop rendering the edited task as a new task
+    if (edit === true) {
+      // find a specific task from State tasks
+      const found = tasks.find((task) => task.id === idTaskToEdit);
+      // formData captures only the fields that have been changed
+      // foreach field that has been changed, the new data is saved in 'found' respectively
+      // page will render according when tasks changed.
+      // Tasks with edited fields will be displayed in tasklistboard but it will disaapear once page refreshes
+      for (const property in formData) {
+        found[property] = formData[property];
+      }
+      // need to permanently save the edited task in State tasks
+      // setTasks(tasks); will not trigger the filter, useMemo in TaskContext because they depend on the change of 'tasks' not the changes of tasks'element
+      setTasks([...tasks]);
+    } else {
+      // SOLUTION 1 TO GET INPUT VALUES USING STATE
+      setTasks([...tasks, { ...formData, id: uuid() }]);
+    }
 
     // SOLUTION 2 TO GET INPUT VALUES
     // const form = event.target;
@@ -38,60 +56,13 @@ export default function Formm({ handleClose }) {
     event.preventDefault();
     let nam = event.target.name;
     let val = event.target.value;
-    // validate
-    const valid = checkValidity(nam, val);
-    if (valid === true) {
-      if (nam === "taskdate") {
-        // val is a string ('2020-10-26') so we need to parse it (19090980980..) for format() method in Tasklistboard.js to run
-        val = Date.parse(val);
-      }
-      setFormData({ ...formData, [nam]: val });
-    }
-  };
 
-  function checkValidity(nam, val) {
-    if (nam === "taskname") {
-      if (val === "") {
-        setError({ ...error, [nam]: "What is the task?" });
-        return false;
-      } else {
-        setError({ ...error, [nam]: null });
-        return true;
-      }
-    } else if (nam === "taskdescription") {
-      if (val === "") {
-        setError({ ...error, [nam]: "Some note, maybe" });
-        return false;
-      } else {
-        setError({ ...error, [nam]: null });
-        return true;
-      }
-    } else if (nam === "taskassign") {
-      if (val === "") {
-        setError({
-          ...error,
-          [nam]: "Oh oh! Who is going to complete this task?",
-        });
-        return false;
-      } else {
-        setError({ ...error, [nam]: null });
-        return true;
-      }
-    } else if (nam === "taskdate") {
-      if (val === "") {
-        setError({ ...error, [nam]: "When should this task complete?" });
-        return false;
-      } else {
-        setError({ ...error, [nam]: null });
-        return true;
-      }
-    } else if (nam === "taskstatus") {
-      if (val !== "") {
-        setError({ ...error, [nam]: null });
-        return true;
-      }
+    if (nam === "taskdate") {
+      // val is a string ('2020-10-26') so we need to parse it (19090980980..) for format() method in Tasklistboard.js to run
+      val = Date.parse(val);
     }
-  }
+    setFormData({ ...formData, [nam]: val });
+  };
 
   return (
     //   noValidate - disable the default validation UI by Browsers
@@ -104,6 +75,7 @@ export default function Formm({ handleClose }) {
           type="text"
           placeholder="I want to ..."
           name="taskname"
+          defaultValue={editName}
         />
       </Form.Group>
       <Form.Group controlId="taskDescription">
@@ -114,15 +86,17 @@ export default function Formm({ handleClose }) {
           as="textarea"
           rows="3"
           name="taskdescription"
+          defaultValue={editDescription}
         />
       </Form.Group>
-      <Form.Group controlId="taskAssign">
+      <Form.Group controlId="taskowner">
         <Form.Label>Assign To</Form.Label>
         <Form.Control
           onChange={handleChange}
           required
           type="text"
-          name="taskassign"
+          name="taskowner"
+          defaultValue={editOwner}
         />
       </Form.Group>
       <Form.Row>
@@ -132,13 +106,15 @@ export default function Formm({ handleClose }) {
             required
             type="date"
             name="taskdate"
+            defaultValue={editDate}
             onChange={handleChange}
           />
         </Form.Group>
         <Form.Group as={Col} controlId="taskstatus">
           <Form.Label>Status</Form.Label>
           <Form.Control as="select" name="taskstatus" onChange={handleChange}>
-            <option defaultValue="To Do">To Do</option>
+            <option defaultValue="Choose...">Choose..</option>
+            <option value="To Do">To Do</option>
             <option value="In Progress">In Progress</option>
             <option value="Review">Review</option>
             <option value="Done">Done</option>

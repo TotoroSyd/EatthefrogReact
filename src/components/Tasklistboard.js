@@ -5,11 +5,13 @@ import { v4 as uuid } from "uuid";
 import { format } from "date-fns";
 import { TaskContext } from "../contexts/TaskContext"; // secondary export from Context.js
 import { FilterContext } from "../contexts/FilterContext";
+import { ModalContext } from "../contexts/ModalContext";
 
 export default function Tasklistboard() {
   // return the value that is stored in the context. const { tasks, setTasks } - setTasks is optional in this component because I dont setTask here
   const { tasks, tasksFiltered, todayDisplay } = useContext(TaskContext);
   const { filter } = useContext(FilterContext);
+  const { edit } = useContext(ModalContext);
 
   let task = [];
 
