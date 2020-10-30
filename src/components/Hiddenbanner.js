@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { TaskContext } from "../src/contexts/TaskContext";
 
 export default function Hiddenbanner() {
-  const { taskListVisible } = useContext(TaskContext);
+  const { setTaskListVisible } = useContext(TaskContext);
   const imageRef = React.useRef(null);
   function changeImage(signal) {
     if (signal === "close")
