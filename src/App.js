@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-// import "./App.css";
+import "./App.css";
 import TasklistV from "./components/TasklistV";
 import WelcomeV from "./components/WelcomeV";
 import TaskContextProvider, { TaskContext } from "../src/contexts/TaskContext";
