@@ -11,7 +11,7 @@ export default function Hiddenbanner() {
   }
   return (
     <div className="hidden_banner_button">
-      <a href="welcome">
+      <a href="/#">
         <img
           className="frogButton"
           src="/images/FrogButtonWhiteBg_close.svg"
