@@ -1,25 +1,21 @@
 import React, { useContext } from "react";
 import { ModalContext } from "../contexts/ModalContext";
-import Modall from "./Modall";
-import Formm from "./Form";
+import { TaskContext } from "../contexts/TaskContext";
 
 export default function Task({ id, name, description, owner, date, status }) {
   // console.log(id, name, description, owner, date, status);
   // Set statte to control Show/ No show Modal
   const {
-    showModal,
     setShowModal,
     setModalTitle,
-    editName,
     setEditName,
-    editDescription,
     setEditDescription,
     setEditOwner,
     setEditDate,
     setEditStatus,
-    setIdTaskToEdit,
     setEdit,
   } = useContext(ModalContext);
+  const { setIdTaskToEdit, deleteTask } = useContext(TaskContext);
   const handleShow = () => {
     // this will change the Modal title in the modal which is staying in Sidebar component
     setModalTitle("Edit Task");
@@ -71,6 +67,9 @@ export default function Task({ id, name, description, owner, date, status }) {
           className="delete-btn"
           onClick={(e) => {
             e.preventDefault();
+            if (window.confirm("Are you sure you wish to delete this item?")) {
+              deleteTask(id);
+            }
           }}
         >
           <img

@@ -14,7 +14,7 @@ export default function ModalContextProvider({ children }) {
   const [editOwner, setEditOwner] = useState("");
   const [editDate, setEditDate] = useState(Date.now());
   const [editStatus, setEditStatus] = useState("To Do");
-  const [idTaskToEdit, setIdTaskToEdit] = useState("");
+
   // console.log(idTaskToEdit);
   // console.log(editName, editDescription, editOwner, editDate, editStatus);
 
@@ -36,8 +36,6 @@ export default function ModalContextProvider({ children }) {
         setEditDate,
         editStatus,
         setEditStatus,
-        idTaskToEdit,
-        setIdTaskToEdit,
         edit,
         setEdit,
       }}

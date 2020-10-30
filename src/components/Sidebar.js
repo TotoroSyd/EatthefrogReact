@@ -25,6 +25,7 @@ export default function Sidebar() {
     setEditDate,
     editStatus,
     setEditStatus,
+    setEdit,
   } = useContext(ModalContext);
 
   const { setFilter } = useContext(FilterContext);
@@ -52,6 +53,8 @@ export default function Sidebar() {
     setEditOwner("");
     setEditStatus("To Do");
     setEditDate(Date.now());
+    // reset edit State to false
+    setEdit(false);
   };
 
   return (
