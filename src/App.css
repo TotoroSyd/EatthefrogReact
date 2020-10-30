@@ -1,8 +1,9 @@
-#root {
+html,
+body {
   font-family: sans-serif;
   height: 100vh;
   width: 100%;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 /* Normal button */
@@ -99,7 +100,7 @@ a:hover {
 
 .welcome_message {
   text-align: center;
-  /* margin-top: 1rem; */
+  margin-top: 2rem;
   width: 100%;
   /* padding-top: 2rem; */
 }
@@ -147,7 +148,7 @@ h5 {
 .summary_card_parent > h6 {
   color: #fcbb30;
   font-weight: 700;
-  font-size: 5rem;
+  font-size: 6rem;
   text-align: center;
   margin: 0;
   /* position: relative; */
